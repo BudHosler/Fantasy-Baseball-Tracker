@@ -13,5 +13,11 @@ private:
 public:
 	void setName(string);
 	void setTeam(string);
-	void setPoints(int, int, int, int)
+	void setPoints(int);
+
+	string getName();
+	string getTeam();
+	string getPoints();
 };
+
+
