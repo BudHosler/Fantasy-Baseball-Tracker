@@ -13,7 +13,7 @@ private:
 public:
 	void setName(string);
 	void setTeam(string);
-	void setPoints(int);
+	virtual void calculatePoints() = 0;
 
 	string getName();
 	string getTeam();
