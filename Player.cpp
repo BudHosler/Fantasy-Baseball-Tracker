@@ -16,17 +16,17 @@ void Player::setTeam(string inputTeam)
 }
 
 
-string Player::getName()
+string Player::getName() const
 {
 	return name;
 }
 
-string Player::getTeam()
+string Player::getTeam() const
 {
 	return team;
 }
 
-string Player::getPoints()
+int Player::getPoints() const
 {
 	return points;
 }
