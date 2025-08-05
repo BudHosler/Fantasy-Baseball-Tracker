@@ -21,12 +21,18 @@
     <ClInclude Include="Hitter.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Pitcher.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Hitter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pitcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
