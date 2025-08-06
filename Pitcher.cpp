@@ -103,3 +103,29 @@ int Pitcher::getHolds() const
 {
     return holds;
 }
+
+void Pitcher::displayPlayer()
+{
+    cout << endl << "============================================" << endl;
+    cout << "             PITCHER STATISTICS             " << endl;
+    cout << "============================================" << endl;
+
+    const int spaceWidth = 25;
+
+    cout << left;
+    cout << setw(spaceWidth) << "Player Name" << ": " << getName() << endl;
+    cout << setw(spaceWidth) << "Team" << ": " << getTeam() << endl;
+    cout << setw(spaceWidth) << "Fantasy Points" << ": " << getPoints() << endl;
+    cout << "--------------------------------------------" << endl;
+    cout << setw(spaceWidth) << "Games Played" << ": " << games << endl;
+    cout << setw(spaceWidth) << "Innings Pitched" << ": " << inningsPitched << endl;
+    cout << setw(spaceWidth) << "Earned Runs" << ": " << earnedRuns << endl;
+    cout << setw(spaceWidth) << "Wins" << ": " << wins << endl;
+    cout << setw(spaceWidth) << "Losses" << ": " << losses << endl;
+    cout << setw(spaceWidth) << "Saves" << ": " << saves << endl;
+    cout << setw(spaceWidth) << "Holds" << ": " << holds << endl;
+    cout << setw(spaceWidth) << "Strikeouts" << ": " << strikeouts << endl;
+    cout << setw(spaceWidth) << "Hits Allowed" << ": " << hitsAllowed << endl;
+    cout << setw(spaceWidth) << "Walks Issued" << ": " << walksIssued << endl;
+    cout << "============================================" << endl;
+}

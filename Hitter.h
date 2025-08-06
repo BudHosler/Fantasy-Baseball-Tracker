@@ -38,4 +38,6 @@ public:
 	int getStolenBases() const;
 	int getCaughtStealing() const;
 	int getTotalBases() const;
+
+	void displayPlayer();
 };

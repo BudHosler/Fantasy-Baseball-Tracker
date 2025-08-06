@@ -1,6 +1,7 @@
 #include "Hitter.h"
 
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -124,6 +125,35 @@ int Hitter::getCaughtStealing() const {
 
 int Hitter::getTotalBases() const {
     return totalBases;
+}
+
+void Hitter::displayPlayer()
+{
+    cout << endl << "============================================" << endl;
+    cout << "             HITTER STATISTICS              " << endl;
+    cout << "============================================" << endl;
+
+    const int spaceWidth = 25;
+
+    cout << left;
+    cout << setw(spaceWidth) << "Player Name" << ": " << getName() << endl;
+    cout << setw(spaceWidth) << "Team" << ": " << getTeam() << endl;
+    cout << setw(spaceWidth) << "Fantasy Points" << ": " << getPoints() << endl;
+    cout << "--------------------------------------------" << endl;
+    cout << setw(spaceWidth) << "Games Played" << ": " << games << endl;
+    cout << setw(spaceWidth) << "Singles" << ": " << singles << endl;
+    cout << setw(spaceWidth) << "Doubles" << ": " << doubles << endl;
+    cout << setw(spaceWidth) << "Triples" << ": " << triples << endl;
+    cout << setw(spaceWidth) << "Home Runs" << ": " << homeruns << endl;
+    cout << setw(spaceWidth) << "Total Bases" << ": " << totalBases << endl;
+    cout << setw(spaceWidth) << "Runs Scored" << ": " << runs << endl;
+    cout << setw(spaceWidth) << "Runs Batted In (RBI)" << ": " << runsBattedIn << endl;
+    cout << setw(spaceWidth) << "Walks" << ": " << walks << endl;
+    cout << setw(spaceWidth) << "Hit By Pitch (HBP)" << ": " << hitByPitch << endl;
+    cout << setw(spaceWidth) << "Strike Outs" << ": " << strikeOuts << endl;
+    cout << setw(spaceWidth) << "Stolen Bases" << ": " << stolenBases << endl;
+    cout << setw(spaceWidth) << "Caught Stealing" << ": " << caughtStealing << endl;
+    cout << "============================================" << endl;
 }
 
 

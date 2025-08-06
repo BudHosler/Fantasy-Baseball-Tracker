@@ -19,6 +19,10 @@ public:
 	string getName() const;
 	string getTeam() const;
 	int getPoints() const;
+
+	virtual void displayPlayer() = 0;
+
+
 };
 
 

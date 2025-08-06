@@ -33,4 +33,6 @@ public:
     int getWalksIssued() const;
     int getHolds() const;
 
+    void displayPlayer();
+
 };
