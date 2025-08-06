@@ -14,9 +14,9 @@
 using namespace std;
 
 
-void inputHittersCSV(vector<Player*>&);
-
+void inputHittersCSV(vector<Player*>&); 
 void inputPitchersCSV(vector<Player*>&);
+void writeBinaryHitter(const int); 
 
 
 int main() {
@@ -27,11 +27,12 @@ int main() {
 
 	inputHittersCSV(players);
 	inputPitchersCSV(players);
+	
 
 	vectorSize = players.size();
 
 
-	players[400]->displayPlayer(); 
+	players[4]->displayPlayer(); 
 
 
 
@@ -105,6 +106,7 @@ void inputHittersCSV(vector<Player*>& player)
 	fin.close();
 }
 
+
 void inputPitchersCSV(vector<Player*>& player) {
 	ifstream fin;
 
@@ -158,6 +160,14 @@ void inputPitchersCSV(vector<Player*>& player) {
 		player.push_back(pitcherEntry);
 	}
 	fin.close();
+}
+
+void Hitter::writeBinary(const int size)
+{
+
+	int len = getName().length(); 
+
+
 }
 
 

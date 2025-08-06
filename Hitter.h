@@ -40,7 +40,7 @@ public:
 	int getCaughtStealing() const;
 	int getTotalBases() const;
 
-	void inputHittersCSV(vector<Player*>&);
+
 	void displayPlayer();
-	void writeBinary(const int);
+
 };

@@ -129,70 +129,6 @@ int Hitter::getTotalBases() const {
     return totalBases;
 }
 
-void inputHittersCSV(vector<Player*>& player)
-{
-    ifstream fin; 
-
-    fin.open("hitters.csv");
-
-    string stringInput;
-
-    //skip file header
-    getline(fin, stringInput);
-
-    while (getline(fin, stringInput, ',')) {
-
-        Hitter* hitterEntry = new Hitter;
-
-        hitterEntry->setName(stringInput);
-
-        getline(fin, stringInput, ',');
-        hitterEntry->setTeam(stringInput);
-
-        getline(fin, stringInput, ',');
-        hitterEntry->setGames(stoi(stringInput));
-
-        getline(fin, stringInput, ',');
-        hitterEntry->setSingles(stoi(stringInput));
-
-        getline(fin, stringInput, ',');
-        hitterEntry->setDoubles(stoi(stringInput));
-
-        getline(fin, stringInput, ',');
-        hitterEntry->setTriples(stoi(stringInput));
-
-        getline(fin, stringInput, ',');
-        hitterEntry->setHomeRuns(stoi(stringInput));
-
-        getline(fin, stringInput, ',');
-        hitterEntry->setRuns(stoi(stringInput));
-
-        getline(fin, stringInput, ',');
-        hitterEntry->setRBI(stoi(stringInput));
-
-        getline(fin, stringInput, ',');
-        hitterEntry->setWalks(stoi(stringInput));
-
-        getline(fin, stringInput, ',');
-        hitterEntry->setStrikeOuts(stoi(stringInput));
-
-        getline(fin, stringInput, ',');
-        hitterEntry->setHBP(stoi(stringInput));
-
-        getline(fin, stringInput, ',');
-        hitterEntry->setStolenBases(stoi(stringInput));
-
-        getline(fin, stringInput);
-        hitterEntry->setCaughtStealing(stoi(stringInput));
-
-        hitterEntry->calculateTotalBases();
-        hitterEntry->calculatePoints();
-
-        player.push_back(hitterEntry);
-    }
-    fin.close();
-}
-
 void Hitter::displayPlayer()
 {
     cout << endl << "============================================" << endl;
@@ -222,13 +158,7 @@ void Hitter::displayPlayer()
     cout << "============================================" << endl;
 }
 
-void Hitter::writeBinary(const int size)
-{
 
-    int len = getName().length();
-
-
-}
 
 
 
