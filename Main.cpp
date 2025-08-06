@@ -20,23 +20,11 @@ void inputPitchersCSV(vector<Player*>&);
 
 int main() {
 
-	
-
 	vector <Player*> players;
 
 	inputHittersCSV(players);
 
-	
-
-
-
-
-
-		
-
-
-
-
+	inputPitchersCSV(players);
 
 
 
@@ -107,7 +95,7 @@ void inputHittersCSV(vector<Player*>& player)
 	fin.close();
 }
 
-void inputPitcherCSV(vector<Player*>& player) {
+void inputPitchersCSV(vector<Player*>& player) {
 	ifstream fin;
 
 	fin.open("pitchers.csv");
@@ -119,7 +107,44 @@ void inputPitcherCSV(vector<Player*>& player) {
 	getline(fin, stringInput);
 
 	while (getline(fin, stringInput, ',')) {
-		Pitcher* pitcherEntry
-	}
+		Pitcher* pitcherEntry = new Pitcher;
 
+		pitcherEntry->setName(stringInput);
+
+		getline(fin, stringInput, ',');
+		pitcherEntry->setTeam(stringInput);
+
+		fin >> statInput;
+		pitcherEntry->setWins(statInput);
+
+		fin >> statInput;
+		pitcherEntry->setLosses(statInput);
+
+		fin >> statInput;
+		pitcherEntry->setGames(statInput);
+
+		fin >> statInput;
+		pitcherEntry->setSaves(statInput);
+
+		fin >> statInput;
+		pitcherEntry->setHolds(statInput);
+
+		fin >> statInput;
+		pitcherEntry->setInningsPitched(statInput);
+
+		fin >> statInput;
+		pitcherEntry->setHitsAllowed(statInput);
+
+		fin >> statInput;
+		pitcherEntry->setEarnedRuns(statInput);
+
+		fin >> statInput;
+		pitcherEntry->setWalksIssued(statInput);
+
+		fin >> statInput;
+		pitcherEntry->setStrikeouts(statInput);
+
+		player.push_back(pitcherEntry);
+	}
+	fin.close();
 }

@@ -4,6 +4,11 @@
 
 using namespace std;
 
+void Pitcher::setGames(int g)
+{
+    games = g;
+}
+
 void Pitcher::setInningsPitched(int ip)
 {
     inningsPitched = ip;

@@ -8,9 +8,10 @@ using namespace std;
 
 class Pitcher : public Player {
 private:
-	int inningsPitched = 0, earnedRuns = 0, wins = 0, losses = 0, saves = 0, strikeouts = 0, hitsAllowed = 0, walksIssued = 0, holds = 0;
+    int games = 0, inningsPitched = 0, earnedRuns = 0, wins = 0, losses = 0, saves = 0, strikeouts = 0, hitsAllowed = 0, walksIssued = 0, holds = 0;
 
 public:
+    void setGames(int);
     void setInningsPitched(int);
     void setEarnedRuns(int);
     void setWins(int);
