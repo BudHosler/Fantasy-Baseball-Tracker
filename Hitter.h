@@ -8,7 +8,7 @@ using namespace std;
 
 class Hitter : public Player {
 private:
-	int games, singles, doubles, triples, homeruns, runs, runsBattedIn, walks, hitByPitch, strikeOuts, stolenBases, caughtStealing, totalBases;
+	int games = 0, singles = 0, doubles = 0, triples = 0, homeruns = 0, runs = 0, runsBattedIn = 0, walks = 0, hitByPitch = 0, strikeOuts = 0, stolenBases = 0, caughtStealing = 0, totalBases = 0;
 public:
 	void setGames(int);
 	void setSingles(int);
@@ -22,8 +22,8 @@ public:
 	void setStrikeOuts(int);
 	void setStolenBases(int);
 	void setCaughtStealing(int);
-	void calculateTotalBases(int);
-	void calculatePoints(int, )
+	void calculateTotalBases();
+	void calculatePoints();
 
 	int getGames() const;
 	int getSingles() const;

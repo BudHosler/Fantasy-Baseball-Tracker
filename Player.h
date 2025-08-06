@@ -8,7 +8,8 @@ using namespace std;
 class Player {
 private:
 	string name, team;
-	int points;
+protected:
+	int points = 0;
 
 public:
 	void setName(string);

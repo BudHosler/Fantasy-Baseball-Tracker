@@ -64,9 +64,14 @@ void Hitter::setCaughtStealing(int cs)
     caughtStealing = cs;
 }
 
-void Hitter::setTotalBases(int tb)
+void Hitter::calculatePoints()
 {
-    totalBases = tb;
+    points = totalBases + walks + runs + runsBattedIn - strikeOuts + (stolenBases * 2) - caughtStealing + hitByPitch;
+}
+
+void Hitter::calculateTotalBases()
+{
+    totalBases = singles + (doubles*2) + (triples*3) + (homeruns*4);
 }
 
 int Hitter::getGames() const {

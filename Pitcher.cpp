@@ -49,6 +49,11 @@ void Pitcher::setHolds(int hld)
     holds = hld;
 }
 
+void Pitcher::calculatePoints()
+{
+    points = (wins * 5) - (losses * 5) + (saves * 5) + (holds * 2) + (inningsPitched * 3) - hitsAllowed - (earnedRuns * 2) - walksIssued + strikeouts;
+}
+
 int Pitcher::getInningsPitched() const
 {
     return inningsPitched;
