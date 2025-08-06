@@ -22,7 +22,8 @@ public:
 	void setStrikeOuts(int);
 	void setStolenBases(int);
 	void setCaughtStealing(int);
-	void setTotalBases(int);
+	void calculateTotalBases(int);
+	void calculatePoints(int, )
 
 	int getGames() const;
 	int getSingles() const;
@@ -37,5 +38,4 @@ public:
 	int getStolenBases() const;
 	int getCaughtStealing() const;
 	int getTotalBases() const;
-
 };
