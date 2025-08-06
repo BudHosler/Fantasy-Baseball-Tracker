@@ -16,7 +16,7 @@ using namespace std;
 
 void inputHittersCSV(vector<Player*>&); 
 void inputPitchersCSV(vector<Player*>&);
-void writeBinaryHitter(const int); 
+void writeBinaryHitter(const int, vector<Player*>&);
 
 
 int main() {
@@ -157,17 +157,43 @@ void inputPitchersCSV(vector<Player*>& player) {
 
 		pitcherEntry->calculatePoints();
 
+
+
 		player.push_back(pitcherEntry);
 	}
 	fin.close();
 }
 
-void Hitter::writeBinary(const int size)
+void writeBinaryHitter(const int size, vector<Player*>& player)
 {
+	fstream fout("binaryData.dat", ios::out | ios::binary);
 
-	int len = getName().length(); 
+	for (int i = 0; i < size; i++) {
+		if (Hitter* hitter = dynamic_cast<Hitter*>(player[i])) {
+			char playerType = 'h';
+			fout.write(&playerType, sizeof(playerType));
+
+			//note for future: writing the file directly, or does it make more sense to save into temp variable?  Different for strings or ints?
+			//write name
+			int len = hitter->getName().length();
+			fout.write(reinterpret_cast<char*>(&len), sizeof(len));
+			fout.write(hitter->getName().c_str(), len);
+
+			//write team
+			len = hitter->getTeam().length();
+			fout.write(reinterpret_cast<char*>(&len), sizeof(len));
+			fout.write(hitter->getTeam().c_str(), len);
+
+			//write games- this one is solid3
+
+			int inputToBinary = hitter->getGames();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
 
 
+		}
+
+	
+	}
 }
 
 
