@@ -18,18 +18,21 @@ void inputHittersCSV(vector<Player*>&);
 
 void inputPitchersCSV(vector<Player*>&);
 
-void openFilesTest(vector<Player*>&);
 
 int main() {
+
+	int vectorSize;
 
 	vector <Player*> players;
 
 	inputHittersCSV(players);
 	inputPitchersCSV(players);
 
+	vectorSize = players.size();
 
 
 	players[400]->displayPlayer(); 
+
 
 
 
