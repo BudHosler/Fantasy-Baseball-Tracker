@@ -18,13 +18,18 @@ void inputHittersCSV(vector<Player*>&);
 
 void inputPitchersCSV(vector<Player*>&);
 
+void openFilesTest(vector<Player*>&);
+
 int main() {
 
 	vector <Player*> players;
 
 	inputHittersCSV(players);
-
 	inputPitchersCSV(players);
+
+
+
+	players[400]->displayPlayer(); 
 
 
 
@@ -40,7 +45,6 @@ void inputHittersCSV(vector<Player*>& player)
 	fin.open("hitters.csv");
 
 	string stringInput;
-	int statInput;
 
 	//skip file header
 	getline(fin, stringInput);
@@ -54,41 +58,44 @@ void inputHittersCSV(vector<Player*>& player)
 		getline(fin, stringInput, ',');
 		hitterEntry->setTeam(stringInput);
 
-		fin >> statInput;
-		hitterEntry->setGames(statInput);
+		getline(fin, stringInput, ',');
+		hitterEntry->setGames(stoi(stringInput));
 
-		fin >> statInput;
-		hitterEntry->setSingles(statInput);
+		getline(fin, stringInput, ',');
+		hitterEntry->setSingles(stoi(stringInput));
 
-		fin >> statInput;
-		hitterEntry->setDoubles(statInput);
+		getline(fin, stringInput, ',');
+		hitterEntry->setDoubles(stoi(stringInput));
 
-		fin >> statInput;
-		hitterEntry->setTriples(statInput);
+		getline(fin, stringInput, ',');
+		hitterEntry->setTriples(stoi(stringInput));
 
-		fin >> statInput;
-		hitterEntry->setHomeRuns(statInput);
+		getline(fin, stringInput, ',');
+		hitterEntry->setHomeRuns(stoi(stringInput));
 
-		fin >> statInput;
-		hitterEntry->setRuns(statInput);
+		getline(fin, stringInput, ',');
+		hitterEntry->setRuns(stoi(stringInput));
 
-		fin >> statInput;
-		hitterEntry->setRBI(statInput);
+		getline(fin, stringInput, ',');
+		hitterEntry->setRBI(stoi(stringInput));
 
-		fin >> statInput;
-		hitterEntry->setWalks(statInput);
+		getline(fin, stringInput, ',');
+		hitterEntry->setWalks(stoi(stringInput));
 
-		fin >> statInput;
-		hitterEntry->setStrikeOuts(statInput);
+		getline(fin, stringInput, ',');
+		hitterEntry->setStrikeOuts(stoi(stringInput));
 
-		fin >> statInput;
-		hitterEntry->setHBP(statInput);
+		getline(fin, stringInput, ',');
+		hitterEntry->setHBP(stoi(stringInput));
 
-		fin >> statInput;
-		hitterEntry->setStolenBases(statInput);
+		getline(fin, stringInput, ',');
+		hitterEntry->setStolenBases(stoi(stringInput));
 
-		fin >> statInput;
-		hitterEntry->setCaughtStealing(statInput);
+		getline(fin, stringInput);
+		hitterEntry->setCaughtStealing(stoi(stringInput));
+
+		hitterEntry->calculateTotalBases();
+		hitterEntry->calculatePoints();
 
 		player.push_back(hitterEntry);
 	}
@@ -101,7 +108,6 @@ void inputPitchersCSV(vector<Player*>& player) {
 	fin.open("pitchers.csv");
 
 	string stringInput;
-	int statInput;
 
 	//skip file header
 	getline(fin, stringInput);
@@ -114,37 +120,42 @@ void inputPitchersCSV(vector<Player*>& player) {
 		getline(fin, stringInput, ',');
 		pitcherEntry->setTeam(stringInput);
 
-		fin >> statInput;
-		pitcherEntry->setWins(statInput);
+		getline(fin, stringInput, ',');
+		pitcherEntry->setWins(stoi(stringInput));
 
-		fin >> statInput;
-		pitcherEntry->setLosses(statInput);
+		getline(fin, stringInput, ',');
+		pitcherEntry->setLosses(stoi(stringInput));
 
-		fin >> statInput;
-		pitcherEntry->setGames(statInput);
+		getline(fin, stringInput, ',');
+		pitcherEntry->setGames(stoi(stringInput));
 
-		fin >> statInput;
-		pitcherEntry->setSaves(statInput);
+		getline(fin, stringInput, ',');
+		pitcherEntry->setSaves(stoi(stringInput));
 
-		fin >> statInput;
-		pitcherEntry->setHolds(statInput);
+		getline(fin, stringInput, ',');
+		pitcherEntry->setHolds(stoi(stringInput));
 
-		fin >> statInput;
-		pitcherEntry->setInningsPitched(statInput);
+		getline(fin, stringInput, ',');
+		pitcherEntry->setInningsPitched(stoi(stringInput));
 
-		fin >> statInput;
-		pitcherEntry->setHitsAllowed(statInput);
+		getline(fin, stringInput, ',');
+		pitcherEntry->setHitsAllowed(stoi(stringInput));
 
-		fin >> statInput;
-		pitcherEntry->setEarnedRuns(statInput);
+		getline(fin, stringInput, ',');
+		pitcherEntry->setEarnedRuns(stoi(stringInput));
 
-		fin >> statInput;
-		pitcherEntry->setWalksIssued(statInput);
+		getline(fin, stringInput, ',');
+		pitcherEntry->setWalksIssued(stoi(stringInput));
 
-		fin >> statInput;
-		pitcherEntry->setStrikeouts(statInput);
+		getline(fin, stringInput);
+		pitcherEntry->setStrikeouts(stoi(stringInput));
+
+		pitcherEntry->calculatePoints();
 
 		player.push_back(pitcherEntry);
 	}
 	fin.close();
 }
+
+
+
