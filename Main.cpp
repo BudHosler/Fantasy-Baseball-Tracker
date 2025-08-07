@@ -286,6 +286,7 @@ void readBinary(int, vector<Player*>& player)
 
 	char playerType;
 	int inputFromBinary = 0;
+	string inputString;
 
 	int index = 0;
 	while (fin.read((&playerType), sizeof(playerType))) {
@@ -293,11 +294,19 @@ void readBinary(int, vector<Player*>& player)
 
 			Hitter* hitterInput = new Hitter;
 
+			int len = 0;
 			//read name
-		
+			fin.read(reinterpret_cast<char*>(&len), sizeof(len));
+			inputString = string(len, '\0');
+			fin.read(&inputString[0], len);
+			hitterInput->setName(inputString);
 
 			//read team
-		
+			fin.read(reinterpret_cast<char*>(&len), sizeof(len));
+			inputString = string(len, '\0');
+			fin.read(&inputString[0], len);
+			hitterInput->setTeam(inputString);
+
 
 			//read stats
 			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
@@ -340,6 +349,57 @@ void readBinary(int, vector<Player*>& player)
 			hitterInput->calculatePoints();
 
 			player.push_back(hitterInput);
+		}
+		else {
+			fin.read((&playerType), sizeof(playerType));
+
+			Pitcher* pitcherInput = new Pitcher;
+
+			int len = 0;
+			//read name
+			fin.read(reinterpret_cast<char*>(&len), sizeof(len));
+			inputString = string(len, '\0');
+			fin.read(&inputString[0], len);
+			pitcherInput->setName(inputString);
+
+			//read team
+			fin.read(reinterpret_cast<char*>(&len), sizeof(len));
+			inputString = string(len, '\0');
+			fin.read(&inputString[0], len);
+			pitcherInput->setTeam(inputString);
+
+			//read stats
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setWins(inputFromBinary);
+
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setLosses(inputFromBinary);
+
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setGames(inputFromBinary);
+
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setSaves(inputFromBinary);
+
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setHolds(inputFromBinary);
+
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setInningsPitched(inputFromBinary);
+
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setHitsAllowed(inputFromBinary);
+
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setEarnedRuns(inputFromBinary);
+
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setWalksIssued(inputFromBinary);
+
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setStrikeouts(inputFromBinary);
+
+			pitcherInput->calculatePoints();
 		}
 
 	}
