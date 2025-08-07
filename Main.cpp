@@ -17,30 +17,71 @@ using namespace std;
 void inputHittersCSV(vector<Player*>&); 
 void inputPitchersCSV(vector<Player*>&);
 void writeBinary(const int, vector<Player*>&);
-void readBinary(int, vector<Player*>&);
+void readBinary(int&, vector<Player*>&);
+void TESTwriteBinary(const int, vector<Player*>&);
+void TESTreadBinary(int&, vector<Player*>&);
 
 
 int main() {
+	int vectorSize = 0;
+	vector<Player*> players;
 
-	int vectorSize;
+	int choice;
+	do {
+		cout << "\n=== MENU ===\n";
+		cout << "1. Load hitters from CSV\n";
+		cout << "2. Load pitchers from CSV\n";
+		cout << "3. Write to binary file\n";
+		cout << "4. Read from binary file\n";
+		cout << "5. Display player by index\n";
+		cout << "0. Exit\n";
+		cout << "Choice: ";
+		cin >> choice;
 
-	vector <Player*> players;
+		switch (choice) {
+		case 1:
+			inputHittersCSV(players);
+			cout << "Hitters loaded.\n";
+			break;
 
-	inputHittersCSV(players);
-	inputPitchersCSV(players);
-	
+		case 2:
+			inputPitchersCSV(players);
+			cout << "Pitchers loaded.\n";
+			break;
 
-	vectorSize = players.size();
-	writeBinary(vectorSize, players);
+		case 3:
+			writeBinary(static_cast<int>(players.size()), players);
+			cout << "Data written to binary file.\n";
+			break;
 
+		case 4:
+			players.clear(); // prevent duplicates
+			readBinary(vectorSize, players);
+			cout << "Data read from binary file.\n";
+			break;
 
-	players[4]->displayPlayer(); 
+		case 5: {
+			int index;
+			cout << "Enter player index: ";
+			cin >> index;
+			if (index >= 0 && index < players.size()) {
+				players[index]->displayPlayer();
+			}
+			else {
+				cout << "Invalid index.\n";
+			}
+			break;
+		}
 
+		case 0:
+			cout << "Goodbye!\n";
+			break;
 
+		default:
+			cout << "Invalid option.\n";
+		}
+	} while (choice != 0);
 
-
-
-	system("pause");
 	return 0;
 }
 
@@ -170,6 +211,9 @@ void writeBinary(const int size, vector<Player*>& player)
 {
 	fstream fout("binaryData.dat", ios::out | ios::binary);
 
+	//output vector size
+	fout.write(reinterpret_cast<const char*>(&size), sizeof(size));
+
 	char playerType;
 	int outputToBinary = 0;
 
@@ -280,16 +324,18 @@ void writeBinary(const int size, vector<Player*>& player)
 	}
 }
 
-void readBinary(int, vector<Player*>& player)
+void readBinary(int& count, vector<Player*>& player)
 {
 	fstream fin("binaryData.dat", ios::in | ios::binary);
+
+	fin.read(reinterpret_cast<char*>(&count), sizeof(count));
 
 	char playerType;
 	int inputFromBinary = 0;
 	string inputString;
 
-	int index = 0;
-	while (fin.read((&playerType), sizeof(playerType))) {
+	for (int i = 0; i < count; ++i) {
+		fin.read(&playerType, sizeof(playerType));
 		if (playerType == 'h') {
 
 			Hitter* hitterInput = new Hitter;
@@ -351,8 +397,6 @@ void readBinary(int, vector<Player*>& player)
 			player.push_back(hitterInput);
 		}
 		else {
-			fin.read((&playerType), sizeof(playerType));
-
 			Pitcher* pitcherInput = new Pitcher;
 
 			int len = 0;
@@ -400,11 +444,18 @@ void readBinary(int, vector<Player*>& player)
 			pitcherInput->setStrikeouts(inputFromBinary);
 
 			pitcherInput->calculatePoints();
+
+			player.push_back(pitcherInput);
 		}
-
 	}
+}
 
+void TESTwriteBinary(const int, vector<Player*>&)
+{
+}
 
+void TESTreadBinary(int&, vector<Player*>&)
+{
 }
 
 
