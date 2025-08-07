@@ -60,6 +60,11 @@ void Pitcher::calculatePoints()
     points = (wins * 5) - (losses * 5) + (saves * 5) + (holds * 2) + (inningsPitched * 3) - hitsAllowed - (earnedRuns * 2) - walksIssued + strikeouts;
 }
 
+int Pitcher::getGames() const
+{
+    return games;
+}
+
 int Pitcher::getInningsPitched() const
 {
     return inningsPitched;
@@ -104,6 +109,7 @@ int Pitcher::getHolds() const
 {
     return holds;
 }
+
 
 void Pitcher::displayPlayer()
 {

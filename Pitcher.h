@@ -23,6 +23,7 @@ public:
     void setHolds(int);
     void calculatePoints();
 
+    int getGames() const;
     int getInningsPitched() const;
     int getEarnedRuns() const;
     int getWins() const;
@@ -32,6 +33,7 @@ public:
     int getHitsAllowed() const;
     int getWalksIssued() const;
     int getHolds() const;
+  
 
     void displayPlayer();
 

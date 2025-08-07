@@ -16,7 +16,8 @@ using namespace std;
 
 void inputHittersCSV(vector<Player*>&); 
 void inputPitchersCSV(vector<Player*>&);
-void writeBinaryHitter(const int, vector<Player*>&);
+void writeBinary(const int, vector<Player*>&);
+void readBinary
 
 
 int main() {
@@ -30,6 +31,7 @@ int main() {
 	
 
 	vectorSize = players.size();
+	writeBinary(vectorSize, players);
 
 
 	players[4]->displayPlayer(); 
@@ -164,16 +166,19 @@ void inputPitchersCSV(vector<Player*>& player) {
 	fin.close();
 }
 
-void writeBinaryHitter(const int size, vector<Player*>& player)
+void writeBinary(const int size, vector<Player*>& player)
 {
 	fstream fout("binaryData.dat", ios::out | ios::binary);
 
+	char playerType;
+	int inputToBinary = 0;
+
 	for (int i = 0; i < size; i++) {
 		if (Hitter* hitter = dynamic_cast<Hitter*>(player[i])) {
-			char playerType = 'h';
+			//log class type
+			playerType = 'h';
 			fout.write(&playerType, sizeof(playerType));
 
-			//note for future: writing the file directly, or does it make more sense to save into temp variable?  Different for strings or ints?
 			//write name
 			int len = hitter->getName().length();
 			fout.write(reinterpret_cast<char*>(&len), sizeof(len));
@@ -184,13 +189,105 @@ void writeBinaryHitter(const int size, vector<Player*>& player)
 			fout.write(reinterpret_cast<char*>(&len), sizeof(len));
 			fout.write(hitter->getTeam().c_str(), len);
 
-			//write games- this one is solid3
+			//write stats
+			inputToBinary = hitter->getGames();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
 
-			int inputToBinary = hitter->getGames();
+			inputToBinary = hitter->getSingles();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = hitter->getDoubles();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = hitter->getTriples();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = hitter->getHomeRuns();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = hitter->getRuns();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = hitter->getRBI();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = hitter->getWalks();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = hitter->getStrikeOuts();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = hitter->getHBP();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = hitter->getStolenBases();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = hitter->getCaughtStealing();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = hitter->getTotalBases();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = hitter->getPoints();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+		}
+		else {
+			Pitcher* pitcher = dynamic_cast<Pitcher*>(player[i]);
+
+			//log class type
+			playerType = 'p';
+			fout.write(&playerType, sizeof(playerType));
+
+			//write name
+			int len = pitcher->getName().length();
+			fout.write(reinterpret_cast<char*>(&len), sizeof(len));
+			fout.write(pitcher->getName().c_str(), len);
+
+			//write team
+			len = pitcher->getTeam().length();
+			fout.write(reinterpret_cast<char*>(&len), sizeof(len));
+			fout.write(pitcher->getTeam().c_str(), len);
+
+			//write stats
+			inputToBinary = pitcher->getWins();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = pitcher->getLosses();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = pitcher->getGames();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = pitcher->getSaves();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = pitcher->getHolds();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = pitcher->getInningsPitched();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = pitcher->getHitsAllowed();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = pitcher->getEarnedRuns();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = pitcher->getWalksIssued();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = pitcher->getStrikeouts();
+			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
+
+			inputToBinary = pitcher->getPoints();
 			fout.write(reinterpret_cast<char*>(&inputToBinary), sizeof(inputToBinary));
 
 
 		}
+
+
+
 
 	
 	}

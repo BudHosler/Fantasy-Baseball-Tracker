@@ -40,6 +40,7 @@ public:
 	int getTotalBases() const;
 
 
+
 	void displayPlayer();
 
 };
