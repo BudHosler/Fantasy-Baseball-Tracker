@@ -20,55 +20,40 @@ void readBinary(vector<Player*>&);
 
 
 int main() {
-	int binaryObjects;
 	vector<Player*> players;
+	int menuChoice = 0;
 
-	int choice;
 	do {
-		cout << "\n=== MENU ===\n";
-		cout << "1. Load hitters from CSV\n";
-		cout << "2. Load pitchers from CSV\n";
-		cout << "3. Write to binary file\n";
-		cout << "4. Read from binary file\n";
-		cout << "5. Search for player\n";
-		cout << "0. Exit\n";
-		cout << "Choice: ";
-		cin >> choice;
+		menuChoice = displayMenu();
 
-		switch (choice) {
+		switch (menuChoice) {
 		case 1:
 			inputHittersCSV(players);
 			cout << "Hitters loaded.\n";
 			break;
-
 		case 2:
 			inputPitchersCSV(players);
 			cout << "Pitchers loaded.\n";
 			break;
-
-		case 3:
-		{
+		case 3: {
 			ofstream fout("binaryData.dat", ios::out | ios::binary);
-
-			int size = players.size();
+			int size = static_cast<int>(players.size());
 			fout.write(reinterpret_cast<char*>(&size), sizeof(size));
-
-			for (int i = 0; i < players.size(); ++i) {
+			for (size_t i = 0; i < players.size(); ++i) {
 				players[i]->writeBinary(fout);
 			}
 			break;
 		}
 		case 4:
-			players.clear(); // prevent duplicates
+			players.clear(); // (Note: leaks; see tip below)
 			readBinary(players);
 			cout << "Data read from binary file.\n";
 			break;
-
 		case 5: {
 			int index;
 			cout << "Enter player index: ";
 			cin >> index;
-			if (index >= 0 && index < players.size()) {
+			if (index >= 0 && index < static_cast<int>(players.size())) {
 				players[index]->displayPlayer();
 			}
 			else {
@@ -76,15 +61,11 @@ int main() {
 			}
 			break;
 		}
-
-		case 0:
+		case 6:
 			cout << "Goodbye!\n";
 			break;
-
-		default:
-			cout << "Invalid option.\n";
 		}
-	} while (choice != 0);
+	} while (menuChoice != 6);  // exit on 6
 
 	return 0;
 }
@@ -93,10 +74,10 @@ int displayMenu()
 {
 	int menuChoice;
 	cout << "=== MENU ===" << endl;
-	cout << "1. Load hitters from CSV" << endl << "2. Load pitchers from CSV" << endl << "3. Write to binary file" << endl << "4. Read from binary file" << endl << "5. Exit" << endl;
+	cout << "1. Load hitters from CSV" << endl << "2. Load pitchers from CSV" << endl << "3. Write to binary file" << endl << "4. Read from binary file" << endl << "5. Display Player" << endl << "6. Exit Menu" << endl;
 	cout << "Enter your choice: ";
 	while (!(cin >> menuChoice) || cin.fail() || menuChoice > 6 || menuChoice < 1) {
-		cout << "Invalid entry. Please enter a number 1-5: ";
+		cout << "Invalid entry. Please enter a number 1-6: ";
 		cin.clear();
 		cin.ignore(100, '\n');
 	}
