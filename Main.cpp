@@ -18,7 +18,7 @@ void inputHittersCSV(vector<Player*>&);
 void inputPitchersCSV(vector<Player*>&);
 void writeBinary(const int, vector<Player*>&);
 void readBinary(int&, vector<Player*>&);
-void TESTwriteBinary(vector<Player*>&);
+void TESTwriteBinary(int, vector<Player*>&);
 void TESTreadBinary(vector<Player*>&);
 
 
@@ -76,7 +76,7 @@ int main() {
 		}
 
 		case 6:
-			TESTwriteBinary(players);
+			TESTwriteBinary(2, players);
 			cout << "TESTwriteBinary called.\n";
 			break;
 
@@ -462,242 +462,248 @@ void readBinary(int& count, vector<Player*>& player)
 	}
 }
 
-void TESTwriteBinary(vector<Player*>& player)
+void TESTwriteBinary(int size, vector<Player*>& player)
 {
 	fstream fout("binaryData.dat", ios::out | ios::binary);
 
+	//output vector size
+	fout.write(reinterpret_cast<const char*>(&size), sizeof(size));
 
 	char playerType;
 	int outputToBinary = 0;
 
-	if (Hitter* hitter = dynamic_cast<Hitter*>(player[0])) {
-		//log class type
-		playerType = 'h';
-		fout.write(&playerType, sizeof(playerType));
+	for (int i = 0; i < size; i++) {
+		if (Hitter* hitter = dynamic_cast<Hitter*>(player[i])) {
+			//log class type
+			playerType = 'h';
+			fout.write(&playerType, sizeof(playerType));
 
-		//write name
-		int len = hitter->getName().length();
-		fout.write(reinterpret_cast<char*>(&len), sizeof(len));
-		fout.write(hitter->getName().c_str(), len);
+			//write name
+			int len = hitter->getName().length();
+			fout.write(reinterpret_cast<char*>(&len), sizeof(len));
+			fout.write(hitter->getName().c_str(), len);
 
-		//write team
-		len = hitter->getTeam().length();
-		fout.write(reinterpret_cast<char*>(&len), sizeof(len));
-		fout.write(hitter->getTeam().c_str(), len);
+			//write team
+			len = hitter->getTeam().length();
+			fout.write(reinterpret_cast<char*>(&len), sizeof(len));
+			fout.write(hitter->getTeam().c_str(), len);
 
-		//write stats
-		outputToBinary = hitter->getGames();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			//write stats
+			outputToBinary = hitter->getGames();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = hitter->getSingles();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = hitter->getSingles();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = hitter->getDoubles();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = hitter->getDoubles();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = hitter->getTriples();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = hitter->getTriples();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = hitter->getHomeRuns();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = hitter->getHomeRuns();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = hitter->getRuns();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = hitter->getRuns();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = hitter->getRBI();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = hitter->getRBI();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = hitter->getWalks();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = hitter->getWalks();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = hitter->getStrikeOuts();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = hitter->getStrikeOuts();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = hitter->getHBP();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = hitter->getHBP();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = hitter->getStolenBases();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = hitter->getStolenBases();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = hitter->getCaughtStealing();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = hitter->getCaughtStealing();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = hitter->getTotalBases();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
-	}
-	else {
-		Pitcher* pitcher = dynamic_cast<Pitcher*>(player[0]);
+			outputToBinary = hitter->getTotalBases();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+		}
+		else {
+			Pitcher* pitcher = dynamic_cast<Pitcher*>(player[i]);
 
-		//log class type
-		playerType = 'p';
-		fout.write(&playerType, sizeof(playerType));
+			//log class type
+			playerType = 'p';
+			fout.write(&playerType, sizeof(playerType));
 
-		//write name
-		int len = pitcher->getName().length();
-		fout.write(reinterpret_cast<char*>(&len), sizeof(len));
-		fout.write(pitcher->getName().c_str(), len);
+			//write name
+			int len = pitcher->getName().length();
+			fout.write(reinterpret_cast<char*>(&len), sizeof(len));
+			fout.write(pitcher->getName().c_str(), len);
 
-		//write team
-		len = pitcher->getTeam().length();
-		fout.write(reinterpret_cast<char*>(&len), sizeof(len));
-		fout.write(pitcher->getTeam().c_str(), len);
+			//write team
+			len = pitcher->getTeam().length();
+			fout.write(reinterpret_cast<char*>(&len), sizeof(len));
+			fout.write(pitcher->getTeam().c_str(), len);
 
-		//write stats
-		outputToBinary = pitcher->getWins();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			//write stats
+			outputToBinary = pitcher->getWins();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = pitcher->getLosses();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = pitcher->getLosses();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = pitcher->getGames();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = pitcher->getGames();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = pitcher->getSaves();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = pitcher->getSaves();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = pitcher->getHolds();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = pitcher->getHolds();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = pitcher->getInningsPitched();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = pitcher->getInningsPitched();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = pitcher->getHitsAllowed();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = pitcher->getHitsAllowed();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = pitcher->getEarnedRuns();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = pitcher->getEarnedRuns();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = pitcher->getWalksIssued();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = pitcher->getWalksIssued();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
 
-		outputToBinary = pitcher->getStrikeouts();
-		fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+			outputToBinary = pitcher->getStrikeouts();
+			fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+		}
 	}
 }
 
-void TESTreadBinary(vector<Player*>& player)
+void TESTreadBinary( vector<Player*>& player)
 {
-		fstream fin("binaryData.dat", ios::in | ios::binary);
+	fstream fin("binaryData.dat", ios::in | ios::binary);
 
-	
+	int playerNumber;
+	fin.read(reinterpret_cast<char*>(&playerNumber), sizeof(playerNumber));
 
-		char playerType;
-		int inputFromBinary = 0;
-		string inputString;
+	char playerType;
+	int inputFromBinary = 0;
+	string inputString;
 
-			fin.read(&playerType, sizeof(playerType));
-			if (playerType == 'h') {
+	for (int i = 0; i < playerNumber; ++i) {
+		fin.read(&playerType, sizeof(playerType));
+		if (playerType == 'h') {
 
-				Hitter* hitterInput = new Hitter;
+			Hitter* hitterInput = new Hitter;
 
-				int len = 0;
-				//read name
-				fin.read(reinterpret_cast<char*>(&len), sizeof(len));
-				inputString = string(len, '\0');
-				fin.read(&inputString[0], len);
-				hitterInput->setName(inputString);
+			int len = 0;
+			//read name
+			fin.read(reinterpret_cast<char*>(&len), sizeof(len));
+			inputString = string(len, '\0');
+			fin.read(&inputString[0], len);
+			hitterInput->setName(inputString);
 
-				//read team
-				fin.read(reinterpret_cast<char*>(&len), sizeof(len));
-				inputString = string(len, '\0');
-				fin.read(&inputString[0], len);
-				hitterInput->setTeam(inputString);
+			//read team
+			fin.read(reinterpret_cast<char*>(&len), sizeof(len));
+			inputString = string(len, '\0');
+			fin.read(&inputString[0], len);
+			hitterInput->setTeam(inputString);
 
 
-				//read stats
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				hitterInput->setGames(inputFromBinary);
+			//read stats
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			hitterInput->setGames(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				hitterInput->setSingles(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			hitterInput->setSingles(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				hitterInput->setDoubles(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			hitterInput->setDoubles(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				hitterInput->setTriples(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			hitterInput->setTriples(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				hitterInput->setHomeRuns(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			hitterInput->setHomeRuns(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				hitterInput->setRuns(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			hitterInput->setRuns(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				hitterInput->setRBI(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			hitterInput->setRBI(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				hitterInput->setWalks(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			hitterInput->setWalks(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				hitterInput->setStrikeOuts(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			hitterInput->setStrikeOuts(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				hitterInput->setHBP(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			hitterInput->setHBP(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				hitterInput->setStolenBases(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			hitterInput->setStolenBases(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				hitterInput->setCaughtStealing(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			hitterInput->setCaughtStealing(inputFromBinary);
 
-				hitterInput->calculateTotalBases();
-				hitterInput->calculatePoints();
+			hitterInput->calculateTotalBases();
+			hitterInput->calculatePoints();
 
-				player.push_back(hitterInput);
-			}
-			else {
-				Pitcher* pitcherInput = new Pitcher;
+			player.push_back(hitterInput);
+		}
+		else {
+			Pitcher* pitcherInput = new Pitcher;
 
-				int len = 0;
-				//read name
-				fin.read(reinterpret_cast<char*>(&len), sizeof(len));
-				inputString = string(len, '\0');
-				fin.read(&inputString[0], len);
-				pitcherInput->setName(inputString);
+			int len = 0;
+			//read name
+			fin.read(reinterpret_cast<char*>(&len), sizeof(len));
+			inputString = string(len, '\0');
+			fin.read(&inputString[0], len);
+			pitcherInput->setName(inputString);
 
-				//read team
-				fin.read(reinterpret_cast<char*>(&len), sizeof(len));
-				inputString = string(len, '\0');
-				fin.read(&inputString[0], len);
-				pitcherInput->setTeam(inputString);
+			//read team
+			fin.read(reinterpret_cast<char*>(&len), sizeof(len));
+			inputString = string(len, '\0');
+			fin.read(&inputString[0], len);
+			pitcherInput->setTeam(inputString);
 
-				//read stats
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				pitcherInput->setWins(inputFromBinary);
+			//read stats
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setWins(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				pitcherInput->setLosses(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setLosses(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				pitcherInput->setGames(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setGames(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				pitcherInput->setSaves(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setSaves(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				pitcherInput->setHolds(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setHolds(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				pitcherInput->setInningsPitched(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setInningsPitched(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				pitcherInput->setHitsAllowed(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setHitsAllowed(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				pitcherInput->setEarnedRuns(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setEarnedRuns(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				pitcherInput->setWalksIssued(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setWalksIssued(inputFromBinary);
 
-				fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
-				pitcherInput->setStrikeouts(inputFromBinary);
+			fin.read(reinterpret_cast<char*>(&inputFromBinary), sizeof(inputFromBinary));
+			pitcherInput->setStrikeouts(inputFromBinary);
 
-				pitcherInput->calculatePoints();
+			pitcherInput->calculatePoints();
 
-				player.push_back(pitcherInput);
-			}
-		
+			player.push_back(pitcherInput);
+		}
+	}
 }
 
 
