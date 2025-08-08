@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -21,6 +22,7 @@ public:
 	int getPoints() const;
 
 	virtual void displayPlayer() = 0;
+	virtual void writeBinary(ostream&) = 0;
 
 
 };

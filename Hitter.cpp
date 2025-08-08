@@ -158,6 +158,59 @@ void Hitter::displayPlayer()
     cout << "============================================" << endl;
 }
 
+void Hitter::writeBinary(ostream& fout)
+{
+    char playerType = 'h';
+    fout.write(&playerType, sizeof(playerType));
+
+    //write name
+    int len = getName().length();
+    fout.write(reinterpret_cast<char*>(&len), sizeof(len));
+    fout.write(getName().c_str(), len);
+
+    //write team
+    len = getTeam().length();
+    fout.write(reinterpret_cast<char*>(&len), sizeof(len));
+    fout.write(getTeam().c_str(), len);
+
+    //write stats
+    int outputToBinary = getGames();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getSingles();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getDoubles();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getTriples();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getHomeRuns();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getRuns();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getRBI();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getWalks();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getStrikeOuts();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getHBP();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getStolenBases();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getCaughtStealing();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+}
+
 
 
 

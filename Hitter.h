@@ -42,5 +42,6 @@ public:
 
 
 	void displayPlayer();
+	void writeBinary(ostream&);
 
 };

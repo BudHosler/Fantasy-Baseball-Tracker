@@ -136,3 +136,53 @@ void Pitcher::displayPlayer()
     cout << setw(spaceWidth) << "Walks Issued" << ": " << walksIssued << endl;
     cout << "============================================" << endl;
 }
+
+void Pitcher::writeBinary(ostream& fout)
+{
+    //log player type
+    char playerType = 'p';
+    fout.write(&playerType, sizeof(playerType));
+
+    //write name
+    int len = getName().length();
+    fout.write(reinterpret_cast<char*>(&len), sizeof(len));
+    fout.write(getName().c_str(), len);
+
+    //write team
+    len = getTeam().length();
+    fout.write(reinterpret_cast<char*>(&len), sizeof(len));
+    fout.write(getTeam().c_str(), len);
+
+    //write stats
+    int outputToBinary = getWins();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getLosses();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getGames();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getSaves();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getHolds();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getInningsPitched();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getHitsAllowed();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getEarnedRuns();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getWalksIssued();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+
+    outputToBinary = getStrikeouts();
+    fout.write(reinterpret_cast<char*>(&outputToBinary), sizeof(outputToBinary));
+}
+
+
