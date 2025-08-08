@@ -13,7 +13,7 @@
 
 using namespace std;
 
-
+int displayMenu();
 void inputHittersCSV(vector<Player*>&); 
 void inputPitchersCSV(vector<Player*>&);
 void readBinary(vector<Player*>&);
@@ -30,7 +30,7 @@ int main() {
 		cout << "2. Load pitchers from CSV\n";
 		cout << "3. Write to binary file\n";
 		cout << "4. Read from binary file\n";
-		cout << "5. Display player by index\n";
+		cout << "5. Search for player\n";
 		cout << "0. Exit\n";
 		cout << "Choice: ";
 		cin >> choice;
@@ -87,6 +87,20 @@ int main() {
 	} while (choice != 0);
 
 	return 0;
+}
+
+int displayMenu()
+{
+	int menuChoice;
+	cout << "=== MENU ===" << endl;
+	cout << "1. Load hitters from CSV" << endl << "2. Load pitchers from CSV" << endl << "3. Write to binary file" << endl << "4. Read from binary file" << endl << "5. Exit" << endl;
+	cout << "Enter your choice: ";
+	while (!(cin >> menuChoice) || cin.fail() || menuChoice > 6 || menuChoice < 1) {
+		cout << "Invalid entry. Please enter a number 1-5: ";
+		cin.clear();
+		cin.ignore(100, '\n');
+	}
+	return menuChoice;
 }
 
 void inputHittersCSV(vector<Player*>& player)
