@@ -17,6 +17,7 @@ int displayMenu();
 void inputHittersCSV(vector<Player*>&); 
 void inputPitchersCSV(vector<Player*>&);
 void readBinary(vector<Player*>&);
+int searchPlayer(vector<Player*>&, string);
 
 
 int main() {
