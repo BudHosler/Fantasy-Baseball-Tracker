@@ -46,27 +46,27 @@ int main() {
 			break;
 		}
 		case 4:
-			players.clear(); // (Note: leaks; see tip below)
+			players.clear();
 			readBinary(players);
 			cout << "Data read from binary file.\n";
 			break;
 		case 5: {
-			int index;
-			cout << "Enter player index: ";
-			cin >> index;
-			if (index >= 0 && index < static_cast<int>(players.size())) {
-				players[index]->displayPlayer();
-			}
-			else {
-				cout << "Invalid index.\n";
-			}
+			string userInput;
+			cout << "Enter player name: ";
+			cin.ignore(50, '\n');
+			getline(cin, userInput);
+			int searchIndex = searchPlayer(players, userInput);
+			if (searchIndex == -1)
+				cout << "Player not found.";
+			else
+				players[searchIndex]->displayPlayer();
 			break;
 		}
 		case 6:
 			cout << "Goodbye!\n";
 			break;
 		}
-	} while (menuChoice != 6);  // exit on 6
+	} while (menuChoice != 6); 
 
 	return 0;
 }
@@ -75,9 +75,9 @@ int displayMenu()
 {
 	int menuChoice;
 	cout << "=== MENU ===" << endl;
-	cout << "1. Load hitters from CSV" << endl << "2. Load pitchers from CSV" << endl << "3. Write to binary file" << endl << "4. Read from binary file" << endl << "5. Display Player" << endl << "6. Exit Menu" << endl;
+	cout << "1. Load hitters from CSV" << endl << "2. Load pitchers from CSV" << endl << "3. Write to binary file" << endl << "4. Read from binary file" << endl << "5. Search for player" << endl << "6. Exit Menu" << endl;
 	cout << "Enter your choice: ";
-	while (!(cin >> menuChoice) || cin.fail() || menuChoice > 6 || menuChoice < 1) {
+	while (!(cin >> menuChoice) || cin.fail() || menuChoice > 7 || menuChoice < 1) {
 		cout << "Invalid entry. Please enter a number 1-6: ";
 		cin.clear();
 		cin.ignore(100, '\n');
@@ -331,6 +331,16 @@ void readBinary(vector<Player*>& player)
 			player.push_back(pitcherInput);
 		}
 	}
+}
+
+int searchPlayer(vector<Player*>& player, string userInput) {
+	int size = player.size();
+	for (int i = 0; i < size; i++) {
+		string playerName = player[i]->getName();
+		if (userInput == playerName)
+			return i;
+	}
+	return -1;
 }
 
 
