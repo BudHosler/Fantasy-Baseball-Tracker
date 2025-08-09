@@ -155,9 +155,9 @@ void inputHittersCSV(vector<Player*>& player)
 
 
 void inputPitchersCSV(vector<Player*>& player) {
-	ifstream fin("hitters.csv");
+	ifstream fin("pitchers.csv");
 	if (!fin) {
-		cout << "Error: could not open hitters.csv\n";
+		cout << "Error: could not open pitchers.csv\n";
 		return;
 	}
 
