@@ -38,9 +38,13 @@ int main() {
 			break;
 		case 3: {
 			ofstream fout("binaryData.dat", ios::out | ios::binary);
-			int size = static_cast<int>(players.size());
+			if (!fout) {
+				cout << "Error: cannot open binaryData.dat for writing" << endl;
+				break;
+			}
+			int size = players.size();
 			fout.write(reinterpret_cast<char*>(&size), sizeof(size));
-			for (size_t i = 0; i < players.size(); ++i) {
+			for (int i = 0; i < players.size(); ++i) {
 				players[i]->writeBinary(fout);
 			}
 			break;
@@ -77,7 +81,7 @@ int displayMenu()
 	cout << "=== MENU ===" << endl;
 	cout << "1. Load hitters from CSV" << endl << "2. Load pitchers from CSV" << endl << "3. Write to binary file" << endl << "4. Read from binary file" << endl << "5. Search for player" << endl << "6. Exit Menu" << endl;
 	cout << "Enter your choice: ";
-	while (!(cin >> menuChoice) || cin.fail() || menuChoice > 7 || menuChoice < 1) {
+	while (!(cin >> menuChoice) || cin.fail() || menuChoice > 6 || menuChoice < 1) {
 		cout << "Invalid entry. Please enter a number 1-6: ";
 		cin.clear();
 		cin.ignore(100, '\n');
@@ -151,9 +155,11 @@ void inputHittersCSV(vector<Player*>& player)
 
 
 void inputPitchersCSV(vector<Player*>& player) {
-	ifstream fin;
-
-	fin.open("pitchers.csv");
+	ifstream fin("hitters.csv");
+	if (!fin) {
+		cout << "Error: could not open hitters.csv\n";
+		return;
+	}
 
 	string stringInput;
 
@@ -210,6 +216,10 @@ void inputPitchersCSV(vector<Player*>& player) {
 void readBinary(vector<Player*>& player)
 {
 	fstream fin("binaryData.dat", ios::in | ios::binary);
+	if (!fin) {
+		cout << "Error: binaryData.dat not found" << endl;
+		return;
+	}
 	int count = 0;
 	fin.read(reinterpret_cast<char*>(&count), sizeof(count));
 
